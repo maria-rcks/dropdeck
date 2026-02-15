@@ -1,0 +1,52 @@
+{
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "pill": 999
+  },
+  "effects": {
+    "panelBackdropEnabled": false,
+    "panelBackdropOpacity": 0.0,
+    "panelGradientEnabled": false,
+    "panelGradientOpacity": 0.0,
+    "modalGradientEnabled": false,
+    "modalGradientOpacity": 0.0,
+    "cardGradientEnabled": false,
+    "cardGradientOpacity": 0.0,
+    "sliderFillGradientEnabled": false,
+    "toggleGradientEnabled": false,
+    "toggleGradientOpacity": 0.0,
+    "toggleHighlightOpacity": 0.0
+  },
+  "name": "one-dark-pro",
+  "colors": {
+    "background": "#000000",
+    "backgroundElevated": "#282C34",
+    "backgroundPanel": "#282C34",
+    "backgroundCard": "#2F343F",
+    "border": "#4B5263",
+    "borderSubtle": "#3F4552",
+    "textPrimary": "#ABB2BF",
+    "textSecondary": "#9FA7B5",
+    "textMuted": "#7F8793",
+    "accent": "#61AFEF",
+    "accentMuted": "#56B6C2",
+    "success": "#98C379",
+    "warning": "#E5C07B",
+    "danger": "#E06C75",
+    "scrim": "#000000AA"
+  },
+  "states": {
+    "toggleActiveBg": "#61AFEF",
+    "toggleActiveFg": "#282C34",
+    "toggleInactiveBg": "#2F343F",
+    "toggleInactiveFg": "#ABB2BF",
+    "sliderTrack": "#4B5263",
+    "sliderFill": "#61AFEF",
+    "sliderHandle": "#61AFEF",
+    "notificationBg": "#2F343F"
+  },
+  "title": "One Dark Pro"
+}

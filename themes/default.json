@@ -1,0 +1,78 @@
+{
+  "name": "default",
+  "colors": {
+    "background": "#000000",
+    "backgroundElevated": "#050505",
+    "backgroundPanel": "#0A0A0A",
+    "backgroundCard": "#111111",
+    "border": "#1F1F1F",
+    "borderSubtle": "#171717",
+    "textPrimary": "#FFFFFF",
+    "textSecondary": "#A1A1AA",
+    "textMuted": "#71717A",
+    "accent": "#FFFFFF",
+    "accentMuted": "#D4D4D8",
+    "success": "#22C55E",
+    "warning": "#F59E0B",
+    "danger": "#EF4444",
+    "scrim": "#000000AA"
+  },
+  "states": {
+    "toggleActiveBg": "#FFFFFF",
+    "toggleActiveFg": "#000000",
+    "toggleInactiveBg": "#0B0B0B",
+    "toggleInactiveFg": "#FFFFFF",
+    "sliderTrack": "#141414",
+    "sliderFill": "#FFFFFF",
+    "sliderHandle": "#FFFFFF",
+    "notificationBg": "#0B0B0B"
+  },
+  "radius": {
+    "sm": 10,
+    "md": 14,
+    "lg": 18,
+    "xl": 24,
+    "pill": 999
+  },
+  "effects": {
+    "panelBackdropEnabled": true,
+    "panelBackdropOpacity": 0.74,
+    "panelGradientEnabled": true,
+    "panelGradientOpacity": 0.18,
+    "modalGradientEnabled": false,
+    "modalGradientOpacity": 0.0,
+    "cardGradientEnabled": false,
+    "cardGradientOpacity": 0.0,
+    "sliderFillGradientEnabled": false,
+    "toggleGradientEnabled": false,
+    "toggleGradientOpacity": 0.0,
+    "toggleHighlightOpacity": 0.0
+  },
+  "surfaces": {
+    "panelBackdrop": {
+      "start": "#0B0B0B",
+      "end": "#000000"
+    },
+    "panelGradient": {
+      "start": "#FFFFFF12",
+      "end": "#00000000"
+    },
+    "cardGradient": {
+      "start": "#00000000",
+      "end": "#00000000"
+    },
+    "sliderFillGradient": {
+      "start": "#FFFFFF",
+      "end": "#FFFFFF"
+    },
+    "toggleGradient": {
+      "start": "#00000000",
+      "end": "#00000000"
+    },
+    "modalGradient": {
+      "start": "#00000000",
+      "end": "#00000000"
+    }
+  },
+  "title": "Default"
+}

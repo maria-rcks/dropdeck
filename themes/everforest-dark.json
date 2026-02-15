@@ -1,0 +1,52 @@
+{
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "pill": 999
+  },
+  "effects": {
+    "panelBackdropEnabled": false,
+    "panelBackdropOpacity": 0.0,
+    "panelGradientEnabled": false,
+    "panelGradientOpacity": 0.0,
+    "modalGradientEnabled": false,
+    "modalGradientOpacity": 0.0,
+    "cardGradientEnabled": false,
+    "cardGradientOpacity": 0.0,
+    "sliderFillGradientEnabled": false,
+    "toggleGradientEnabled": false,
+    "toggleGradientOpacity": 0.0,
+    "toggleHighlightOpacity": 0.0
+  },
+  "name": "everforest-dark",
+  "colors": {
+    "background": "#000000",
+    "backgroundElevated": "#2D353B",
+    "backgroundPanel": "#2D353B",
+    "backgroundCard": "#343F44",
+    "border": "#56635F",
+    "borderSubtle": "#4B5653",
+    "textPrimary": "#D3C6AA",
+    "textSecondary": "#C1B59B",
+    "textMuted": "#AFA08A",
+    "accent": "#7FBBB3",
+    "accentMuted": "#83C092",
+    "success": "#A7C080",
+    "warning": "#DBBC7F",
+    "danger": "#E67E80",
+    "scrim": "#000000AA"
+  },
+  "states": {
+    "toggleActiveBg": "#7FBBB3",
+    "toggleActiveFg": "#2D353B",
+    "toggleInactiveBg": "#343F44",
+    "toggleInactiveFg": "#D3C6AA",
+    "sliderTrack": "#56635F",
+    "sliderFill": "#83C092",
+    "sliderHandle": "#83C092",
+    "notificationBg": "#343F44"
+  },
+  "title": "Everforest Dark"
+}

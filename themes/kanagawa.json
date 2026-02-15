@@ -1,0 +1,52 @@
+{
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "pill": 999
+  },
+  "effects": {
+    "panelBackdropEnabled": false,
+    "panelBackdropOpacity": 0.0,
+    "panelGradientEnabled": false,
+    "panelGradientOpacity": 0.0,
+    "modalGradientEnabled": false,
+    "modalGradientOpacity": 0.0,
+    "cardGradientEnabled": false,
+    "cardGradientOpacity": 0.0,
+    "sliderFillGradientEnabled": false,
+    "toggleGradientEnabled": false,
+    "toggleGradientOpacity": 0.0,
+    "toggleHighlightOpacity": 0.0
+  },
+  "name": "kanagawa",
+  "colors": {
+    "background": "#000000",
+    "backgroundElevated": "#1F1F28",
+    "backgroundPanel": "#1F1F28",
+    "backgroundCard": "#2A2A37",
+    "border": "#54546D",
+    "borderSubtle": "#3D3D52",
+    "textPrimary": "#DCD7BA",
+    "textSecondary": "#C8C093",
+    "textMuted": "#A6A69C",
+    "accent": "#7E9CD8",
+    "accentMuted": "#7FB4CA",
+    "success": "#98BB6C",
+    "warning": "#E6C384",
+    "danger": "#E46876",
+    "scrim": "#000000AA"
+  },
+  "states": {
+    "toggleActiveBg": "#7E9CD8",
+    "toggleActiveFg": "#1F1F28",
+    "toggleInactiveBg": "#2A2A37",
+    "toggleInactiveFg": "#DCD7BA",
+    "sliderTrack": "#54546D",
+    "sliderFill": "#7FB4CA",
+    "sliderHandle": "#7FB4CA",
+    "notificationBg": "#2A2A37"
+  },
+  "title": "Kanagawa"
+}

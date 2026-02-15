@@ -1,0 +1,52 @@
+{
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "pill": 999
+  },
+  "effects": {
+    "panelBackdropEnabled": false,
+    "panelBackdropOpacity": 0.0,
+    "panelGradientEnabled": false,
+    "panelGradientOpacity": 0.0,
+    "modalGradientEnabled": false,
+    "modalGradientOpacity": 0.0,
+    "cardGradientEnabled": false,
+    "cardGradientOpacity": 0.0,
+    "sliderFillGradientEnabled": false,
+    "toggleGradientEnabled": false,
+    "toggleGradientOpacity": 0.0,
+    "toggleHighlightOpacity": 0.0
+  },
+  "name": "dracula",
+  "colors": {
+    "background": "#000000",
+    "backgroundElevated": "#282A36",
+    "backgroundPanel": "#282A36",
+    "backgroundCard": "#343746",
+    "border": "#6272A4",
+    "borderSubtle": "#4B557A",
+    "textPrimary": "#F8F8F2",
+    "textSecondary": "#E6E6DE",
+    "textMuted": "#BDC1D6",
+    "accent": "#BD93F9",
+    "accentMuted": "#8BE9FD",
+    "success": "#50FA7B",
+    "warning": "#F1FA8C",
+    "danger": "#FF5555",
+    "scrim": "#000000AA"
+  },
+  "states": {
+    "toggleActiveBg": "#BD93F9",
+    "toggleActiveFg": "#282A36",
+    "toggleInactiveBg": "#343746",
+    "toggleInactiveFg": "#F8F8F2",
+    "sliderTrack": "#6272A4",
+    "sliderFill": "#BD93F9",
+    "sliderHandle": "#BD93F9",
+    "notificationBg": "#343746"
+  },
+  "title": "Dracula"
+}

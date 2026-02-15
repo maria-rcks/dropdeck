@@ -1,0 +1,52 @@
+{
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "pill": 999
+  },
+  "effects": {
+    "panelBackdropEnabled": false,
+    "panelBackdropOpacity": 0.0,
+    "panelGradientEnabled": false,
+    "panelGradientOpacity": 0.0,
+    "modalGradientEnabled": false,
+    "modalGradientOpacity": 0.0,
+    "cardGradientEnabled": false,
+    "cardGradientOpacity": 0.0,
+    "sliderFillGradientEnabled": false,
+    "toggleGradientEnabled": false,
+    "toggleGradientOpacity": 0.0,
+    "toggleHighlightOpacity": 0.0
+  },
+  "name": "tokyo-night",
+  "colors": {
+    "background": "#000000",
+    "backgroundElevated": "#1A1B26",
+    "backgroundPanel": "#1A1B26",
+    "backgroundCard": "#24283B",
+    "border": "#414868",
+    "borderSubtle": "#2F3549",
+    "textPrimary": "#C0CAF5",
+    "textSecondary": "#A9B1D6",
+    "textMuted": "#9AA5CE",
+    "accent": "#7AA2F7",
+    "accentMuted": "#2AC3DE",
+    "success": "#9ECE6A",
+    "warning": "#E0AF68",
+    "danger": "#F7768E",
+    "scrim": "#000000AA"
+  },
+  "states": {
+    "toggleActiveBg": "#7AA2F7",
+    "toggleActiveFg": "#1A1B26",
+    "toggleInactiveBg": "#24283B",
+    "toggleInactiveFg": "#C0CAF5",
+    "sliderTrack": "#414868",
+    "sliderFill": "#7AA2F7",
+    "sliderHandle": "#7AA2F7",
+    "notificationBg": "#24283B"
+  },
+  "title": "Tokyo Night"
+}

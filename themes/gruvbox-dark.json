@@ -1,0 +1,78 @@
+{
+  "name": "gruvbox-dark",
+  "colors": {
+    "background": "#000000",
+    "backgroundElevated": "#3c3836",
+    "backgroundPanel": "#282828",
+    "backgroundCard": "#3c3836",
+    "border": "#7c6f64",
+    "borderSubtle": "#665c54",
+    "textPrimary": "#fbf1c7",
+    "textSecondary": "#ebdbb2",
+    "textMuted": "#a89984",
+    "accent": "#fabd2f",
+    "accentMuted": "#d79921",
+    "success": "#b8bb26",
+    "warning": "#fe8019",
+    "danger": "#fb4934",
+    "scrim": "#000000AA"
+  },
+  "states": {
+    "toggleActiveBg": "#fabd2f",
+    "toggleActiveFg": "#282828",
+    "toggleInactiveBg": "#282828",
+    "toggleInactiveFg": "#fbf1c7",
+    "sliderTrack": "#504945",
+    "sliderFill": "#b8bb26",
+    "sliderHandle": "#b8bb26",
+    "notificationBg": "#3c3836"
+  },
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "pill": 999
+  },
+  "effects": {
+    "panelBackdropEnabled": false,
+    "panelBackdropOpacity": 0.0,
+    "panelGradientEnabled": false,
+    "panelGradientOpacity": 0.0,
+    "modalGradientEnabled": false,
+    "modalGradientOpacity": 0.0,
+    "cardGradientEnabled": false,
+    "cardGradientOpacity": 0.0,
+    "sliderFillGradientEnabled": false,
+    "toggleGradientEnabled": false,
+    "toggleGradientOpacity": 0.0,
+    "toggleHighlightOpacity": 0.0
+  },
+  "surfaces": {
+    "panelBackdrop": {
+      "start": "#282828",
+      "end": "#282828"
+    },
+    "panelGradient": {
+      "start": "#00000000",
+      "end": "#00000000"
+    },
+    "cardGradient": {
+      "start": "#00000000",
+      "end": "#00000000"
+    },
+    "sliderFillGradient": {
+      "start": "#b8bb26",
+      "end": "#b8bb26"
+    },
+    "toggleGradient": {
+      "start": "#00000000",
+      "end": "#00000000"
+    },
+    "modalGradient": {
+      "start": "#00000000",
+      "end": "#00000000"
+    }
+  },
+  "title": "Gruvbox Dark"
+}

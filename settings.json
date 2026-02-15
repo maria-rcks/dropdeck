@@ -1,0 +1,38 @@
+{
+  "themes": [
+    "themes/default.json"
+  ],
+  "spacingProfile": {
+    "scale": 0.91,
+    "extra": 0,
+    "roundTo": 1
+  },
+  "spacing": {
+    "controlGap": 10,
+    "panelContentGap": 14,
+    "panelWidthMargin": 40,
+    "panelHeightMargin": 28,
+    "notificationPopupGap": 8,
+    "notificationPopupMargin": 16
+  },
+  "sizes": {
+    "quickTile": 88,
+    "panelMaxWidth": 980,
+    "panelMaxHeight": 860,
+    "panelGrabberWidth": 54,
+    "panelGrabberHeight": 5,
+    "notificationPopupWidth": 376,
+    "notificationLayerWidth": 380,
+    "notificationLayerHeight": 600
+  },
+  "behavior": {
+    "dragOpenDistance": 220,
+    "dragReleaseThreshold": 0.15,
+    "panelToggleThreshold": 0.2,
+    "panelOpenThreshold": 0.98,
+    "scrimOpacity": 0.66
+  },
+  "colors": {},
+  "states": {},
+  "radius": {}
+}

@@ -1,0 +1,52 @@
+{
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "pill": 999
+  },
+  "effects": {
+    "panelBackdropEnabled": false,
+    "panelBackdropOpacity": 0.0,
+    "panelGradientEnabled": false,
+    "panelGradientOpacity": 0.0,
+    "modalGradientEnabled": false,
+    "modalGradientOpacity": 0.0,
+    "cardGradientEnabled": false,
+    "cardGradientOpacity": 0.0,
+    "sliderFillGradientEnabled": false,
+    "toggleGradientEnabled": false,
+    "toggleGradientOpacity": 0.0,
+    "toggleHighlightOpacity": 0.0
+  },
+  "name": "solarized-dark",
+  "colors": {
+    "background": "#000000",
+    "backgroundElevated": "#002B36",
+    "backgroundPanel": "#002B36",
+    "backgroundCard": "#073642",
+    "border": "#586E75",
+    "borderSubtle": "#4A6066",
+    "textPrimary": "#EEE8D5",
+    "textSecondary": "#93A1A1",
+    "textMuted": "#839496",
+    "accent": "#268BD2",
+    "accentMuted": "#2AA198",
+    "success": "#859900",
+    "warning": "#B58900",
+    "danger": "#DC322F",
+    "scrim": "#000000AA"
+  },
+  "states": {
+    "toggleActiveBg": "#268BD2",
+    "toggleActiveFg": "#002B36",
+    "toggleInactiveBg": "#073642",
+    "toggleInactiveFg": "#EEE8D5",
+    "sliderTrack": "#586E75",
+    "sliderFill": "#2AA198",
+    "sliderHandle": "#2AA198",
+    "notificationBg": "#073642"
+  },
+  "title": "Solarized Dark"
+}

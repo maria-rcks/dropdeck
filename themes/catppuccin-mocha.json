@@ -1,0 +1,52 @@
+{
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "pill": 999
+  },
+  "effects": {
+    "panelBackdropEnabled": false,
+    "panelBackdropOpacity": 0.0,
+    "panelGradientEnabled": false,
+    "panelGradientOpacity": 0.0,
+    "modalGradientEnabled": false,
+    "modalGradientOpacity": 0.0,
+    "cardGradientEnabled": false,
+    "cardGradientOpacity": 0.0,
+    "sliderFillGradientEnabled": false,
+    "toggleGradientEnabled": false,
+    "toggleGradientOpacity": 0.0,
+    "toggleHighlightOpacity": 0.0
+  },
+  "name": "catppuccin-mocha",
+  "colors": {
+    "background": "#000000",
+    "backgroundElevated": "#1E1E2E",
+    "backgroundPanel": "#1E1E2E",
+    "backgroundCard": "#313244",
+    "border": "#585B70",
+    "borderSubtle": "#45475A",
+    "textPrimary": "#CDD6F4",
+    "textSecondary": "#BAC2DE",
+    "textMuted": "#A6ADC8",
+    "accent": "#89B4FA",
+    "accentMuted": "#74C7EC",
+    "success": "#A6E3A1",
+    "warning": "#F9E2AF",
+    "danger": "#F38BA8",
+    "scrim": "#000000AA"
+  },
+  "states": {
+    "toggleActiveBg": "#89B4FA",
+    "toggleActiveFg": "#1E1E2E",
+    "toggleInactiveBg": "#313244",
+    "toggleInactiveFg": "#CDD6F4",
+    "sliderTrack": "#45475A",
+    "sliderFill": "#89B4FA",
+    "sliderHandle": "#89B4FA",
+    "notificationBg": "#313244"
+  },
+  "title": "Catppuccin Mocha"
+}

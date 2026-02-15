@@ -1,0 +1,52 @@
+{
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "pill": 999
+  },
+  "effects": {
+    "panelBackdropEnabled": false,
+    "panelBackdropOpacity": 0.0,
+    "panelGradientEnabled": false,
+    "panelGradientOpacity": 0.0,
+    "modalGradientEnabled": false,
+    "modalGradientOpacity": 0.0,
+    "cardGradientEnabled": false,
+    "cardGradientOpacity": 0.0,
+    "sliderFillGradientEnabled": false,
+    "toggleGradientEnabled": false,
+    "toggleGradientOpacity": 0.0,
+    "toggleHighlightOpacity": 0.0
+  },
+  "name": "nord",
+  "colors": {
+    "background": "#000000",
+    "backgroundElevated": "#2E3440",
+    "backgroundPanel": "#2E3440",
+    "backgroundCard": "#3B4252",
+    "border": "#4C566A",
+    "borderSubtle": "#434C5E",
+    "textPrimary": "#ECEFF4",
+    "textSecondary": "#E5E9F0",
+    "textMuted": "#D8DEE9",
+    "accent": "#88C0D0",
+    "accentMuted": "#81A1C1",
+    "success": "#A3BE8C",
+    "warning": "#EBCB8B",
+    "danger": "#BF616A",
+    "scrim": "#000000AA"
+  },
+  "states": {
+    "toggleActiveBg": "#88C0D0",
+    "toggleActiveFg": "#2E3440",
+    "toggleInactiveBg": "#3B4252",
+    "toggleInactiveFg": "#ECEFF4",
+    "sliderTrack": "#4C566A",
+    "sliderFill": "#88C0D0",
+    "sliderHandle": "#88C0D0",
+    "notificationBg": "#3B4252"
+  },
+  "title": "Nord"
+}

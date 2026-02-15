@@ -1,0 +1,52 @@
+{
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "pill": 999
+  },
+  "effects": {
+    "panelBackdropEnabled": false,
+    "panelBackdropOpacity": 0.0,
+    "panelGradientEnabled": false,
+    "panelGradientOpacity": 0.0,
+    "modalGradientEnabled": false,
+    "modalGradientOpacity": 0.0,
+    "cardGradientEnabled": false,
+    "cardGradientOpacity": 0.0,
+    "sliderFillGradientEnabled": false,
+    "toggleGradientEnabled": false,
+    "toggleGradientOpacity": 0.0,
+    "toggleHighlightOpacity": 0.0
+  },
+  "name": "rose-pine",
+  "colors": {
+    "background": "#000000",
+    "backgroundElevated": "#191724",
+    "backgroundPanel": "#191724",
+    "backgroundCard": "#26233A",
+    "border": "#524F67",
+    "borderSubtle": "#403D52",
+    "textPrimary": "#E0DEF4",
+    "textSecondary": "#CDCBE0",
+    "textMuted": "#908CAA",
+    "accent": "#C4A7E7",
+    "accentMuted": "#9CCFD8",
+    "success": "#31748F",
+    "warning": "#F6C177",
+    "danger": "#EB6F92",
+    "scrim": "#000000AA"
+  },
+  "states": {
+    "toggleActiveBg": "#C4A7E7",
+    "toggleActiveFg": "#191724",
+    "toggleInactiveBg": "#26233A",
+    "toggleInactiveFg": "#E0DEF4",
+    "sliderTrack": "#524F67",
+    "sliderFill": "#9CCFD8",
+    "sliderHandle": "#9CCFD8",
+    "notificationBg": "#26233A"
+  },
+  "title": "Ros\u00e9 Pine"
+}
