@@ -11,8 +11,9 @@ WlrLayershell {
     readonly property var trackedNotifications: notificationServer && notificationServer.trackedNotifications
         ? notificationServer.trackedNotifications
         : null
+    readonly property var notificationValues: trackedNotifications && trackedNotifications.values ? trackedNotifications.values : []
 
-    visible: !app.dnd && trackedNotifications && trackedNotifications.values && trackedNotifications.values.length > 0
+    visible: !app.dnd && notificationValues.length > 0
     color: "transparent"
     anchors {
         top: true
@@ -28,13 +29,23 @@ WlrLayershell {
     keyboardFocus: WlrKeyboardFocus.None
     exclusiveZone: 0
 
+    onNotificationValuesChanged: {
+        if (app && app.debugLoggingEnabled && app.debugLoggingEnabled())
+            app.debugLog("notification-values count=" + notificationValues.length + " dnd=" + app.dnd);
+    }
+
+    onVisibleChanged: {
+        if (app && app.debugLoggingEnabled && app.debugLoggingEnabled())
+            app.debugLog("notification-layer visible=" + visible + " count=" + notificationValues.length + " dnd=" + app.dnd);
+    }
+
     Column {
         anchors.right: parent.right
         spacing: app.sp("notificationPopupGap", 8)
 
         Repeater {
             id: popupRepeater
-            model: trackedNotifications ? trackedNotifications : []
+            model: notificationValues
 
             delegate: C.NotificationPopupCard {
                 required property int index
