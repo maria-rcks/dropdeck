@@ -57,7 +57,7 @@ Rectangle {
         }
     }
 
-    function closeCard() {
+    function dismissCard() {
         if (root.closing)
             return;
         root.closing = true;
@@ -66,9 +66,9 @@ Rectangle {
 
     function activatePrimaryOrDismiss() {
         const actions = root.notification && root.notification.actions ? root.notification.actions : [];
+        root.dismissCard();
         if (actions.length > 0 && actions[0] && actions[0].invoke)
             actions[0].invoke();
-        root.closeCard();
     }
 
     Component.onCompleted: enterAnim.start()
@@ -109,7 +109,7 @@ Rectangle {
         interval: 5200
         running: true
         repeat: false
-        onTriggered: root.closeCard()
+        onTriggered: root.dismissCard()
     }
 
     MouseArea {
@@ -143,7 +143,7 @@ Rectangle {
             }
 
             if (root.x > root.width * 0.36)
-                root.closeCard();
+                root.dismissCard();
             else {
                 root.opacity = 1;
                 snapBack.start();
@@ -250,8 +250,8 @@ Rectangle {
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
                         onClicked: {
+                            root.dismissCard();
                             modelData.invoke();
-                            root.closeCard();
                         }
                     }
                 }
