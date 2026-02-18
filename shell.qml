@@ -9,7 +9,6 @@ import Quickshell.Services.Notifications
 import Quickshell.Bluetooth
 import "components" as C
 import "ui" as U
-import "models/QuickActionsModel.js" as QuickActions
 import "services/PowerService.js" as PowerService
 
 ShellRoot {
@@ -188,6 +187,10 @@ ShellRoot {
                 start: "#ffffff10",
                 end: "#00000010"
             }
+        },
+        debug: {
+            logging: false,
+            actionTracing: false
         }
     })
 
@@ -245,6 +248,7 @@ ShellRoot {
             if (text && text.length > 0)
                 return JSON.parse(text);
         } catch (e) {
+            debugLog("Failed to parse " + String(filePath) + ": " + e);
         }
         return null;
     }
@@ -294,6 +298,19 @@ ShellRoot {
 
     function g(path, fallback) {
         return getSetting(path, fallback);
+    }
+
+    function debugLoggingEnabled() {
+        return Boolean(getSetting("debug.logging", false));
+    }
+
+    function debugActionTracingEnabled() {
+        return Boolean(getSetting("debug.actionTracing", false));
+    }
+
+    function debugLog(message) {
+        if (debugLoggingEnabled())
+            console.log("[dropdeck] " + String(message || ""));
     }
 
     function c(key, fallback) {
@@ -504,6 +521,131 @@ ShellRoot {
 
     function shQuote(s) {
         return "'" + String(s).replace(/'/g, "'\\''") + "'";
+    }
+
+    function quickActionIcon(index) {
+        switch (index) {
+        case 0:
+            return "assets/icons/wifi.svg";
+        case 1:
+            return "assets/icons/bluetooth.svg";
+        case 2:
+            return "assets/icons/airplane.svg";
+        case 3:
+            return "assets/icons/mute.svg";
+        case 4:
+            return dnd ? "assets/icons/bell_off.svg" : "assets/icons/bell.svg";
+        case 5:
+            return "assets/icons/calendar_month.svg";
+        case 6:
+            return "assets/icons/power.svg";
+        case 7:
+            return "assets/icons/settings.svg";
+        default:
+            return "assets/icons/settings.svg";
+        }
+    }
+
+    function quickActionActive(index) {
+        switch (index) {
+        case 0:
+            return wifiEnabled;
+        case 1:
+            return Bluetooth.defaultAdapter && Bluetooth.defaultAdapter.enabled;
+        case 2:
+            return airplaneEnabled;
+        case 3:
+            return volumeMuted;
+        case 4:
+            return dnd;
+        default:
+            return false;
+        }
+    }
+
+    function quickActionDisabled(index) {
+        switch (index) {
+        case 0:
+            return !hasTool("nmcli");
+        case 1:
+            return !Bluetooth.defaultAdapter && !hasTool("bluetoothctl");
+        case 2:
+            return !hasTool("rfkill");
+        case 3:
+            return !hasTool("wpctl");
+        default:
+            return false;
+        }
+    }
+
+    function triggerQuickAction(index) {
+        if (quickActionDisabled(index)) {
+            if (debugActionTracingEnabled())
+                debugLog("quick-action blocked index=" + index);
+            return;
+        }
+
+        if (debugActionTracingEnabled())
+            debugLog("quick-action click index=" + index + " icon=" + quickActionIcon(index));
+
+        switch (index) {
+        case 0:
+            toggleWifi();
+            break;
+        case 1:
+            if (Bluetooth.defaultAdapter)
+                Bluetooth.defaultAdapter.enabled = !Bluetooth.defaultAdapter.enabled;
+            else
+                refreshBluetoothDevices();
+            break;
+        case 2:
+            toggleAirplane();
+            break;
+        case 3:
+            runCommandIf("wpctl", "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle");
+            refreshVolume();
+            break;
+        case 4:
+            dnd = !dnd;
+            break;
+        case 5:
+            openCalendar();
+            break;
+        case 6:
+            openPowerMenu();
+            break;
+        case 7:
+            refreshThemeList();
+            settingsModalOpen = true;
+            break;
+        default:
+            break;
+        }
+    }
+
+    function triggerQuickActionRight(index) {
+        if (quickActionDisabled(index)) {
+            if (debugActionTracingEnabled())
+                debugLog("quick-action right-click blocked index=" + index);
+            return;
+        }
+
+        if (debugActionTracingEnabled())
+            debugLog("quick-action right-click index=" + index + " icon=" + quickActionIcon(index));
+
+        switch (index) {
+        case 0:
+            openWifiChooser();
+            break;
+        case 1:
+            openBluetoothChooser();
+            break;
+        case 4:
+            notificationHistoryOpen = true;
+            break;
+        default:
+            break;
+        }
     }
 
     function openWifiChooser() {
@@ -1260,18 +1402,23 @@ ShellRoot {
                                 }
 
                                 Repeater {
-                                    model: QuickActions.build(root, Bluetooth)
+                                    model: 8
 
                                     delegate: C.QuickIconToggle {
+                                        required property int index
+
+                                        readonly property string actionIcon: root.quickActionIcon(index)
+                                        readonly property bool actionDisabled: root.quickActionDisabled(index)
+
                                         Layout.alignment: Qt.AlignHCenter
                                         Layout.preferredWidth: root.quickTileSize
                                         Layout.preferredHeight: root.quickTileSize
                                         size: root.quickTileSize
                                         iconSize: Math.round(root.quickTileSize * 0.45)
-                                        iconSource: root.themedIcon(modelData.icon, root.s("toggleInactiveBg", "#0B0B0B"))
-                                        activeIconSource: root.themedIcon(modelData.icon, root.s("toggleActiveBg", "#FFFFFF"))
-                                        active: modelData.active
-                                        enabled: !modelData.disabled
+                                        iconSource: root.themedIcon(actionIcon, root.s("toggleInactiveBg", "#0B0B0B"))
+                                        activeIconSource: root.themedIcon(actionIcon, root.s("toggleActiveBg", "#FFFFFF"))
+                                        active: root.quickActionActive(index)
+                                        enabled: !actionDisabled
                                         activeColor: root.s("toggleActiveBg", "#FFFFFF")
                                         inactiveColor: root.s("toggleInactiveBg", "#0B0B0B")
                                         borderColor: root.c("border", "#1F1F1F")
@@ -1281,15 +1428,9 @@ ShellRoot {
                                         gradientEnd: root.sf("toggleGradient", "end", "#00000020")
                                         highlightOpacity: root.fx("toggleHighlightOpacity", 0.0)
                                         inactiveOpacity: 1.0
-                                        iconOpacity: modelData.disabled ? 0.45 : 1.0
-                                        onClicked: {
-                                            if (!modelData.disabled && modelData.action)
-                                                modelData.action();
-                                        }
-                                        onRightClicked: {
-                                            if (!modelData.disabled && modelData.rightAction)
-                                                modelData.rightAction();
-                                        }
+                                        iconOpacity: actionDisabled ? 0.45 : 1.0
+                                        onClicked: root.triggerQuickAction(index)
+                                        onRightClicked: root.triggerQuickActionRight(index)
                                     }
                                 }
                             }

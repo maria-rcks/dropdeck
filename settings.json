@@ -32,6 +32,10 @@
     "panelOpenThreshold": 0.98,
     "scrimOpacity": 0.66
   },
+  "debug": {
+    "logging": false,
+    "actionTracing": false
+  },
   "colors": {},
   "states": {},
   "radius": {}
