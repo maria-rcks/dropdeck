@@ -8,15 +8,11 @@ WlrLayershell {
     property var app
     property var notificationServer
 
-    readonly property var popupNotifications: {
-        if (app.dnd || !notificationServer || !notificationServer.trackedNotifications)
-            return [];
+    readonly property var trackedNotifications: notificationServer && notificationServer.trackedNotifications
+        ? notificationServer.trackedNotifications
+        : null
 
-        const values = notificationServer.trackedNotifications.values || [];
-        return values.slice(Math.max(0, values.length - 3));
-    }
-
-    visible: popupNotifications.length > 0
+    visible: !app.dnd && trackedNotifications && trackedNotifications.values && trackedNotifications.values.length > 0
     color: "transparent"
     anchors {
         top: true
@@ -37,11 +33,14 @@ WlrLayershell {
         spacing: app.sp("notificationPopupGap", 8)
 
         Repeater {
-            model: popupNotifications
+            id: popupRepeater
+            model: trackedNotifications ? trackedNotifications : []
 
             delegate: C.NotificationPopupCard {
+                required property int index
                 required property var modelData
 
+                visible: !app.dnd && index >= popupRepeater.count - 3
                 width: app.sz("notificationPopupWidth", 376)
 
                 notification: modelData
