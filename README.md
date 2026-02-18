@@ -29,6 +29,26 @@ cd dropdeck
 qs -p .
 ```
 
+## Debugging crashes
+
+If `qs -d` crashes intermittently, collect a full bundle:
+
+```bash
+./scripts/collect-quickshell-crash.sh
+```
+
+This writes timestamped artifacts under `./debug-artifacts/` including:
+- latest quickshell coredump summary/details
+- latest quickshell runtime log directory (`/run/user/$UID/quickshell/by-id/...`)
+- current-boot journal entries for quickshell
+- minimal environment + git state snapshot
+
+You can pass a custom output directory:
+
+```bash
+./scripts/collect-quickshell-crash.sh /tmp/dropdeck-debug
+```
+
 ## Requirements
 
 | Requirements | Used for |
