@@ -1124,7 +1124,10 @@ ShellRoot {
         bodyMarkupSupported: false
 
         onNotification: notification => {
-            notification.tracked = true;
+            Qt.callLater(() => {
+                if (notification)
+                    notification.tracked = true;
+            });
 
             const copy = root.notificationHistory.slice();
             copy.push(notification);

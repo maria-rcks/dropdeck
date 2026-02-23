@@ -12,8 +12,12 @@ WlrLayershell {
         ? notificationServer.trackedNotifications
         : null
     readonly property var notificationValues: trackedNotifications && trackedNotifications.values ? trackedNotifications.values : []
+    readonly property var latestNotifications: {
+        const values = notificationValues || [];
+        return values.slice(Math.max(0, values.length - 3));
+    }
 
-    visible: !app.dnd && notificationValues.length > 0
+    visible: !app.dnd && latestNotifications.length > 0
     color: "transparent"
     anchors {
         top: true
@@ -29,42 +33,66 @@ WlrLayershell {
     keyboardFocus: WlrKeyboardFocus.None
     exclusiveZone: 0
 
-    onNotificationValuesChanged: {
+    onLatestNotificationsChanged: {
         if (app && app.debugLoggingEnabled && app.debugLoggingEnabled())
-            app.debugLog("notification-values count=" + notificationValues.length + " dnd=" + app.dnd);
+            app.debugLog("notification-values count=" + latestNotifications.length + " dnd=" + app.dnd);
     }
 
     onVisibleChanged: {
         if (app && app.debugLoggingEnabled && app.debugLoggingEnabled())
-            app.debugLog("notification-layer visible=" + visible + " count=" + notificationValues.length + " dnd=" + app.dnd);
+            app.debugLog("notification-layer visible=" + visible + " count=" + latestNotifications.length + " dnd=" + app.dnd);
     }
 
     Column {
         anchors.right: parent.right
         spacing: app.sp("notificationPopupGap", 8)
 
-        Repeater {
-            id: popupRepeater
-            model: notificationValues
+        C.NotificationPopupCard {
+            visible: latestNotifications.length > 0
+            width: app.sz("notificationPopupWidth", 376)
 
-            delegate: C.NotificationPopupCard {
-                required property int index
-                required property var modelData
+            notification: latestNotifications.length > 0 ? latestNotifications[0] : null
+            cardColor: app.s("toggleInactiveBg", "#0B0B0B")
+            borderColor: app.c("border", "#1F1F1F")
+            panelColor: app.s("sliderTrack", "#1A1A1A")
+            textPrimary: app.c("textPrimary", "#FFFFFF")
+            textSecondary: app.c("textSecondary", "#A1A1AA")
+            cardGradientEnabled: app.fx("cardGradientEnabled", false)
+            cardGradientOpacity: app.fx("cardGradientOpacity", 0.0)
+            cardGradientStart: app.sf("cardGradient", "start", "#ffffff10")
+            cardGradientEnd: app.sf("cardGradient", "end", "#00000010")
+        }
 
-                visible: !app.dnd && index >= popupRepeater.count - 3
-                width: app.sz("notificationPopupWidth", 376)
+        C.NotificationPopupCard {
+            visible: latestNotifications.length > 1
+            width: app.sz("notificationPopupWidth", 376)
 
-                notification: modelData
-                cardColor: app.s("toggleInactiveBg", "#0B0B0B")
-                borderColor: app.c("border", "#1F1F1F")
-                panelColor: app.s("sliderTrack", "#1A1A1A")
-                textPrimary: app.c("textPrimary", "#FFFFFF")
-                textSecondary: app.c("textSecondary", "#A1A1AA")
-                cardGradientEnabled: app.fx("cardGradientEnabled", false)
-                cardGradientOpacity: app.fx("cardGradientOpacity", 0.0)
-                cardGradientStart: app.sf("cardGradient", "start", "#ffffff10")
-                cardGradientEnd: app.sf("cardGradient", "end", "#00000010")
-            }
+            notification: latestNotifications.length > 1 ? latestNotifications[1] : null
+            cardColor: app.s("toggleInactiveBg", "#0B0B0B")
+            borderColor: app.c("border", "#1F1F1F")
+            panelColor: app.s("sliderTrack", "#1A1A1A")
+            textPrimary: app.c("textPrimary", "#FFFFFF")
+            textSecondary: app.c("textSecondary", "#A1A1AA")
+            cardGradientEnabled: app.fx("cardGradientEnabled", false)
+            cardGradientOpacity: app.fx("cardGradientOpacity", 0.0)
+            cardGradientStart: app.sf("cardGradient", "start", "#ffffff10")
+            cardGradientEnd: app.sf("cardGradient", "end", "#00000010")
+        }
+
+        C.NotificationPopupCard {
+            visible: latestNotifications.length > 2
+            width: app.sz("notificationPopupWidth", 376)
+
+            notification: latestNotifications.length > 2 ? latestNotifications[2] : null
+            cardColor: app.s("toggleInactiveBg", "#0B0B0B")
+            borderColor: app.c("border", "#1F1F1F")
+            panelColor: app.s("sliderTrack", "#1A1A1A")
+            textPrimary: app.c("textPrimary", "#FFFFFF")
+            textSecondary: app.c("textSecondary", "#A1A1AA")
+            cardGradientEnabled: app.fx("cardGradientEnabled", false)
+            cardGradientOpacity: app.fx("cardGradientOpacity", 0.0)
+            cardGradientStart: app.sf("cardGradient", "start", "#ffffff10")
+            cardGradientEnd: app.sf("cardGradient", "end", "#00000010")
         }
     }
 }
