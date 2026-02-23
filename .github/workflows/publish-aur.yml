@@ -33,10 +33,14 @@ jobs:
           test -d "$AUR_PACKAGE_DIR"
           test -f "$AUR_PACKAGE_DIR/PKGBUILD"
 
+      - name: Create non-root build user
+        run: |
+          useradd -m builder
+          chown -R builder:builder "$GITHUB_WORKSPACE"
+
       - name: Build fresh .SRCINFO
         run: |
-          cd "$AUR_PACKAGE_DIR"
-          makepkg --printsrcinfo > .SRCINFO
+          su - builder -c "cd '$GITHUB_WORKSPACE/$AUR_PACKAGE_DIR' && makepkg --printsrcinfo > .SRCINFO"
 
       - name: Prepare package payload
         run: |
