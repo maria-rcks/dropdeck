@@ -55,12 +55,24 @@ jobs:
         env:
           AUR_SSH_PRIVATE_KEY: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
         run: |
+          set -euo pipefail
           test -n "$AUR_SSH_PRIVATE_KEY"
+
           install -dm700 ~/.ssh
           printf '%s\n' "$AUR_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts
+
+          ssh-keyscan -H aur.archlinux.org > ~/.ssh/known_hosts 2>/dev/null
+          test -s ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
+
+          cat > ~/.ssh/config <<'EOF'
+Host aur.archlinux.org
+  User aur
+  IdentityFile ~/.ssh/id_ed25519
+  StrictHostKeyChecking accept-new
+EOF
+          chmod 600 ~/.ssh/config
 
       - name: Clone AUR repository
         run: |
