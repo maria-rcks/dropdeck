@@ -87,6 +87,10 @@ ShellRoot {
         "themes/solarized-dark.json",
         "themes/tokyo-night.json"
     ]
+    property string userHomePath: String(Quickshell.env("HOME") || "")
+    property string userConfigHomePath: String(Quickshell.env("XDG_CONFIG_HOME") || (userHomePath.length ? (userHomePath + "/.config") : ""))
+    property string settingsFsPath: userConfigHomePath.length ? (userConfigHomePath + "/dropdeck-settings.json") : "settings.json"
+    property string userThemesDirPath: userConfigHomePath.length ? (userConfigHomePath + "/dropdeck/themes") : ""
 
     property var defaultSettings: ({
         themes: [],
@@ -241,9 +245,20 @@ ShellRoot {
         return base;
     }
 
+    function toFileUrl(filePath) {
+        const p = String(filePath || "").trim();
+        if (!p.length)
+            return "";
+        if (p.startsWith("file://"))
+            return p;
+        if (p.startsWith("/"))
+            return "file://" + encodeURI(p);
+        return String(Qt.resolvedUrl(p));
+    }
+
     function loadJson(filePath) {
         try {
-            jsonFileView.path = String(Qt.resolvedUrl(filePath));
+            jsonFileView.path = toFileUrl(filePath);
             const text = jsonFileView.text();
             if (text && text.length > 0)
                 return JSON.parse(text);
@@ -277,8 +292,16 @@ ShellRoot {
         root.activeThemePath = firstTheme;
     }
 
+    function readSettingsObject() {
+        return loadJson(root.settingsFsPath) || loadJson("settings.json") || {};
+    }
+
     function loadSettings() {
-        const parsed = loadJson("settings.json");
+        const fromXdg = loadJson(root.settingsFsPath);
+        const fromLegacy = fromXdg ? null : loadJson("settings.json");
+        const parsed = fromXdg || fromLegacy;
+        if (!fromXdg && fromLegacy)
+            writeSettingsJson(fromLegacy);
         applyParsedSettings(parsed);
     }
 
@@ -394,7 +417,7 @@ ShellRoot {
 
     function writeSettingsJson(obj) {
         try {
-            settingsWriteFile.path = String(Qt.resolvedUrl("settings.json"));
+            settingsWriteFile.path = toFileUrl(root.settingsFsPath);
             settingsWriteFile.setText(JSON.stringify(obj, null, 2) + "\n");
             return true;
         } catch (e) {
@@ -418,7 +441,7 @@ ShellRoot {
     }
 
     function updateSetting(path, value) {
-        const parsed = loadJson("settings.json") || {};
+        const parsed = readSettingsObject();
         setByPath(parsed, path, value);
         if (writeSettingsJson(parsed))
             applyParsedSettings(parsed);
@@ -427,7 +450,7 @@ ShellRoot {
     function applyTheme(themePath) {
         if (!themePath || String(themePath).length === 0)
             return;
-        const parsed = loadJson("settings.json") || {};
+        const parsed = readSettingsObject();
         parsed.themes = [String(themePath)];
         if (writeSettingsJson(parsed))
             applyParsedSettings(parsed);
@@ -461,8 +484,11 @@ ShellRoot {
     }
 
     function refreshThemeList() {
-        const themeDir = configFsPath("themes");
-        const cmd = "find \"" + themeDir + "\" -maxdepth 1 -type f -name '*.json' | sort";
+        const appThemeDir = configFsPath("themes");
+        const dirs = [shQuote(appThemeDir)];
+        if (root.userThemesDirPath.length)
+            dirs.push(shQuote(root.userThemesDirPath));
+        const cmd = "for d in " + dirs.join(" ") + "; do [ -d \"$d\" ] && find \"$d\" -maxdepth 1 -type f -name '*.json'; done | sort -u";
         themeListQuery.exec(["sh", "-c", cmd]);
     }
 

@@ -1,0 +1,27 @@
+post_install() {
+  cat <<'EOF'
+DropDeck installed.
+
+Recommended (user service):
+  systemctl --user daemon-reload
+  systemctl --user enable --now dropdeck.service
+
+Manual start:
+  dropdeck
+
+Optional (system-wide template, advanced):
+  sudo systemctl enable --now dropdeck@<username>.service
+  # May require /etc/dropdeck/<username>.env with session env vars.
+
+Updates:
+  This is a -git package. It updates to latest commit when you run system updates
+  with your AUR helper (e.g. yay -Syu / paru -Syu).
+
+Config location:
+  ~/.config/dropdeck-settings.json
+EOF
+}
+
+post_upgrade() {
+  post_install
+}
