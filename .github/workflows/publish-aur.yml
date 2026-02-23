@@ -79,14 +79,9 @@ jobs:
           rsync -a --delete --exclude='.git/' /tmp/aur-payload/ /tmp/aur-repo/
 
           cd /tmp/aur-repo
-          git checkout "$AUR_BRANCH" || git checkout -b "$AUR_BRANCH"
+          git checkout -B "$AUR_BRANCH"
           git config user.name "$AUR_COMMIT_NAME"
           git config user.email "$AUR_COMMIT_EMAIL"
-
-          if git diff --quiet && git diff --cached --quiet; then
-            echo "No changes to publish."
-            exit 0
-          fi
 
           git add -A
 
