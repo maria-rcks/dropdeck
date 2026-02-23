@@ -1,0 +1,88 @@
+name: Publish AUR package
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+env:
+  AUR_PACKAGE_NAME: ${{ vars.AUR_PACKAGE_NAME || 'dropdeck-git' }}
+  AUR_GIT_URL: ${{ vars.AUR_GIT_URL || 'ssh://aur@aur.archlinux.org/dropdeck-git.git' }}
+  AUR_PACKAGE_DIR: ${{ vars.AUR_PACKAGE_DIR || 'packaging/aur/dropdeck-git' }}
+  AUR_COMMIT_NAME: ${{ vars.AUR_COMMIT_NAME || 'dropdeck-ci' }}
+  AUR_COMMIT_EMAIL: ${{ vars.AUR_COMMIT_EMAIL || 'dropdeck-ci@users.noreply.github.com' }}
+  AUR_BRANCH: ${{ vars.AUR_BRANCH || 'master' }}
+
+jobs:
+  publish:
+    name: Sync package files to AUR
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:base-devel
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install tooling
+        run: |
+          pacman -Sy --noconfirm --needed git openssh rsync
+
+      - name: Validate package directory
+        run: |
+          test -d "$AUR_PACKAGE_DIR"
+          test -f "$AUR_PACKAGE_DIR/PKGBUILD"
+
+      - name: Build fresh .SRCINFO
+        run: |
+          cd "$AUR_PACKAGE_DIR"
+          makepkg --printsrcinfo > .SRCINFO
+
+      - name: Prepare package payload
+        run: |
+          rm -rf /tmp/aur-payload
+          mkdir -p /tmp/aur-payload
+          rsync -a --delete "$AUR_PACKAGE_DIR/" /tmp/aur-payload/
+
+          # Force one AUR commit per upstream commit.
+          printf '%s\n' "$GITHUB_SHA" > /tmp/aur-payload/.upstream-commit
+
+      - name: Configure SSH for AUR
+        env:
+          AUR_SSH_PRIVATE_KEY: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
+        run: |
+          test -n "$AUR_SSH_PRIVATE_KEY"
+          install -dm700 ~/.ssh
+          printf '%s\n' "$AUR_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Clone AUR repository
+        run: |
+          rm -rf /tmp/aur-repo
+          git clone "$AUR_GIT_URL" /tmp/aur-repo
+
+      - name: Sync, commit, and push
+        run: |
+          rsync -a --delete --exclude='.git/' /tmp/aur-payload/ /tmp/aur-repo/
+
+          cd /tmp/aur-repo
+          git checkout "$AUR_BRANCH" || git checkout -b "$AUR_BRANCH"
+          git config user.name "$AUR_COMMIT_NAME"
+          git config user.email "$AUR_COMMIT_EMAIL"
+
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "No changes to publish."
+            exit 0
+          fi
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No staged changes to publish."
+            exit 0
+          fi
+
+          git commit -m "chore(aur): sync from ${GITHUB_REPOSITORY}@${GITHUB_SHA}"
+          git push origin "$AUR_BRANCH"
