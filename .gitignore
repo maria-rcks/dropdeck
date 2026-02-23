@@ -1,1 +1,8 @@
 settings.json
+
+# makepkg artifacts (AUR scaffold)
+packaging/aur/dropdeck-git/src/
+packaging/aur/dropdeck-git/pkg/
+packaging/aur/dropdeck-git/dropdeck/
+packaging/aur/dropdeck-git/*.pkg.tar.*
+packaging/aur/dropdeck-git/*.pkg.tar.*.sig
