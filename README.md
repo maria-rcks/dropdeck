@@ -21,12 +21,17 @@ So that’s what I did: an _invisible_ menu that I can pull down at any time _(j
 
 If you think Dropdeck would be useful to you, go ahead and try it — any feedback is welcome.
 
-## Quick Start
+## Installation (AUR)
 
 ```bash
-git clone https://github.com/maria-rcks/dropdeck.git
-cd dropdeck
-qs -p .
+yay -S dropdeck-git
+```
+
+Then start it with the systemd user service:
+
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now dropdeck.service
 ```
 
 ## Requirements
