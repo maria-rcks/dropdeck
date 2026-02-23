@@ -21,6 +21,6 @@ No background auto-update is installed.
 - User service is the recommended mode for Wayland desktop components.
 - System-wide template service is provided as an advanced option and may need
   environment overrides in `/etc/dropdeck/<user>.env`.
-- Settings persist to `~/.config/dropdeck-settings.json`.
+- Settings persist to `~/.config/dropdeck/settings.json`.
 - Built-in themes are read from `/usr/share/dropdeck/themes`; optional user
   themes can be placed in `~/.config/dropdeck/themes`.

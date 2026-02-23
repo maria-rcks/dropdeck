@@ -2,23 +2,21 @@
 
 _pkgname=dropdeck
 pkgname=${_pkgname}-git
-pkgver=r27.67aa5b0
+pkgver=r7.f8e18f4
 pkgrel=1
 pkgdesc="Phone-style pull-down panel for Linux desktop (Quickshell)"
 arch=('x86_64' 'aarch64')
 url="https://github.com/maria-rcks/dropdeck"
 license=('Apache-2.0')
-depends=('quickshell')
-optdepends=(
-  'networkmanager: Wi-Fi state and network controls via nmcli'
-  'rfkill: Airplane mode toggle'
-  'brightnessctl: Brightness controls'
-  'wireplumber: Volume controls via wpctl'
-  'playerctl: Media controls and metadata'
-  'bluez-utils: Bluetooth device list/connect via bluetoothctl'
-  'systemd: Power/session actions via loginctl/systemctl'
-  'wlsunset: Night light toggle (preferred)'
-  'gammastep: Night light toggle (fallback)'
+depends=(
+  'quickshell'
+  'networkmanager'
+  'rfkill'
+  'brightnessctl'
+  'wireplumber'
+  'playerctl'
+  'bluez-utils'
+  'systemd'
 )
 makedepends=('git')
 provides=("${_pkgname}")

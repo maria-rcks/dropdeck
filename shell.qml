@@ -89,7 +89,7 @@ ShellRoot {
     ]
     property string userHomePath: String(Quickshell.env("HOME") || "")
     property string userConfigHomePath: String(Quickshell.env("XDG_CONFIG_HOME") || (userHomePath.length ? (userHomePath + "/.config") : ""))
-    property string settingsFsPath: userConfigHomePath.length ? (userConfigHomePath + "/dropdeck-settings.json") : "settings.json"
+    property string settingsFsPath: userConfigHomePath.length ? (userConfigHomePath + "/dropdeck/settings.json") : "settings.json"
     property string userThemesDirPath: userConfigHomePath.length ? (userConfigHomePath + "/dropdeck/themes") : ""
 
     property var defaultSettings: ({
@@ -293,15 +293,16 @@ ShellRoot {
     }
 
     function readSettingsObject() {
-        return loadJson(root.settingsFsPath) || loadJson("settings.json") || {};
+        return loadJson(root.settingsFsPath) || loadJson("settings.json") || loadJson("settings.example.json") || {};
     }
 
     function loadSettings() {
         const fromXdg = loadJson(root.settingsFsPath);
         const fromLegacy = fromXdg ? null : loadJson("settings.json");
-        const parsed = fromXdg || fromLegacy;
-        if (!fromXdg && fromLegacy)
-            writeSettingsJson(fromLegacy);
+        const fromExample = (!fromXdg && !fromLegacy) ? loadJson("settings.example.json") : null;
+        const parsed = fromXdg || fromLegacy || fromExample;
+        if (!fromXdg && (fromLegacy || fromExample))
+            writeSettingsJson(fromLegacy || fromExample);
         applyParsedSettings(parsed);
     }
 
