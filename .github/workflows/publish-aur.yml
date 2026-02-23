@@ -58,29 +58,23 @@ jobs:
           set -euo pipefail
           test -n "$AUR_SSH_PRIVATE_KEY"
 
-          install -dm700 ~/.ssh
-          printf '%s\n' "$AUR_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$AUR_SSH_PRIVATE_KEY" > /tmp/aur_id_ed25519
+          chmod 600 /tmp/aur_id_ed25519
 
-          ssh-keyscan -H aur.archlinux.org > ~/.ssh/known_hosts 2>/dev/null
-          test -s ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-
-          {
-            echo "Host aur.archlinux.org"
-            echo "  User aur"
-            echo "  IdentityFile ~/.ssh/id_ed25519"
-            echo "  StrictHostKeyChecking accept-new"
-          } > ~/.ssh/config
-          chmod 600 ~/.ssh/config
+          ssh-keyscan -H -t ed25519,rsa aur.archlinux.org > /tmp/aur_known_hosts 2>/dev/null
+          test -s /tmp/aur_known_hosts
+          chmod 644 /tmp/aur_known_hosts
 
       - name: Clone AUR repository
         run: |
           rm -rf /tmp/aur-repo
+          export GIT_SSH_COMMAND="ssh -i /tmp/aur_id_ed25519 -o IdentitiesOnly=yes -o UserKnownHostsFile=/tmp/aur_known_hosts -o StrictHostKeyChecking=yes"
+          git ls-remote "$AUR_GIT_URL" >/dev/null
           git clone "$AUR_GIT_URL" /tmp/aur-repo
 
       - name: Sync, commit, and push
         run: |
+          export GIT_SSH_COMMAND="ssh -i /tmp/aur_id_ed25519 -o IdentitiesOnly=yes -o UserKnownHostsFile=/tmp/aur_known_hosts -o StrictHostKeyChecking=yes"
           rsync -a --delete --exclude='.git/' /tmp/aur-payload/ /tmp/aur-repo/
 
           cd /tmp/aur-repo
