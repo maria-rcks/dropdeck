@@ -66,12 +66,12 @@ jobs:
           test -s ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
-          cat > ~/.ssh/config <<'EOF'
-Host aur.archlinux.org
-  User aur
-  IdentityFile ~/.ssh/id_ed25519
-  StrictHostKeyChecking accept-new
-EOF
+          {
+            echo "Host aur.archlinux.org"
+            echo "  User aur"
+            echo "  IdentityFile ~/.ssh/id_ed25519"
+            echo "  StrictHostKeyChecking accept-new"
+          } > ~/.ssh/config
           chmod 600 ~/.ssh/config
 
       - name: Clone AUR repository
