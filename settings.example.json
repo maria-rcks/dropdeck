@@ -1,5 +1,10 @@
 {
   "themes": [
     "themes/default.json"
-  ]
+  ],
+  "clock": {
+    "alternateEnabled": true,
+    "alternateTimeZone": "America/Los_Angeles",
+    "alternateLabel": "San Francisco"
+  }
 }

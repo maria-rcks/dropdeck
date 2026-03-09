@@ -48,6 +48,10 @@ ShellRoot {
     property bool notificationHistoryOpen: false
     property bool calendarOpen: false
     property bool settingsModalOpen: false
+    property bool showingAlternateClock: false
+    property string alternateClockTimeText: ""
+    property string alternateClockDateText: ""
+    property string alternateClockZoneText: ""
 
     property real cpuPercent: 0
     property real memoryPercent: 0
@@ -195,6 +199,11 @@ ShellRoot {
         debug: {
             logging: false,
             actionTracing: false
+        },
+        clock: {
+            alternateEnabled: true,
+            alternateTimeZone: "America/Los_Angeles",
+            alternateLabel: "San Francisco"
         }
     })
 
@@ -290,6 +299,8 @@ ShellRoot {
 
         root.settings = merged;
         root.activeThemePath = firstTheme;
+        root.syncClockPreference();
+        root.refreshAlternateClock();
     }
 
     function readSettingsObject() {
@@ -512,6 +523,8 @@ ShellRoot {
 
     function openPanel() {
         dragging = false;
+        syncClockPreference();
+        refreshAlternateClock();
         setOpenProgress(1);
     }
 
@@ -530,6 +543,21 @@ ShellRoot {
         } else {
             openPanel();
         }
+    }
+
+    function alternateClockEnabled() {
+        const tz = String(g("clock.alternateTimeZone", "America/Los_Angeles") || "").trim();
+        return Boolean(g("clock.alternateEnabled", true)) && tz.length > 0;
+    }
+
+    function syncClockPreference() {
+        showingAlternateClock = false;
+    }
+
+    function toggleClockDisplay() {
+        if (!alternateClockEnabled())
+            return;
+        showingAlternateClock = !showingAlternateClock;
     }
 
     function runCommand(command) {
@@ -787,6 +815,23 @@ ShellRoot {
             return;
         }
         batteryQuery.exec(["sh", "-c", "cat " + shQuote(p) + " 2>/dev/null || echo ''"]);
+    }
+
+    function refreshAlternateClock() {
+        if (!alternateClockEnabled()) {
+            alternateClockTimeText = "";
+            alternateClockDateText = "";
+            alternateClockZoneText = "";
+            showingAlternateClock = false;
+            return;
+        }
+
+        const tz = String(g("clock.alternateTimeZone", "America/Los_Angeles") || "").trim();
+        altClockQuery.exec([
+            "sh",
+            "-c",
+            "env LC_TIME=C TZ=" + shQuote(tz) + " date '+%I:%M %p|%a, %b %-d|%Z' 2>/dev/null || env LC_TIME=C date '+%I:%M %p|%a, %b %-d|'"
+        ]);
     }
 
     function refreshSystemStats() {
@@ -1113,6 +1158,22 @@ ShellRoot {
     }
 
     Process {
+        id: altClockQuery
+        stdout: StdioCollector {
+            waitForEnd: true
+            onStreamFinished: {
+                const parts = text.trim().split("|");
+                root.alternateClockTimeText = String(parts.length > 0 ? parts[0] : "").trim();
+                root.alternateClockDateText = String(parts.length > 1 ? parts[1] : "").trim();
+
+                const zone = String(parts.length > 2 ? parts[2] : "").trim();
+                const label = String(root.g("clock.alternateLabel", "San Francisco") || "").trim();
+                root.alternateClockZoneText = label.length > 0 ? label : zone;
+            }
+        }
+    }
+
+    Process {
         id: systemStatsQuery
         stdout: StdioCollector {
             waitForEnd: true
@@ -1284,6 +1345,15 @@ ShellRoot {
         precision: SystemClock.Minutes
     }
 
+    Timer {
+        id: altClockRefreshTimer
+        interval: 60000
+        running: true
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: root.refreshAlternateClock()
+    }
+
     IpcHandler {
         target: "control"
 
@@ -1369,13 +1439,21 @@ ShellRoot {
 
                     C.PanelHeader {
                         id: topBar
+                        property bool useAltClock: root.showingAlternateClock
+                                                   && root.alternateClockTimeText.length > 0
+                                                   && root.alternateClockDateText.length > 0
                         dateTime: systemClock.date
+                        timeText: useAltClock ? root.alternateClockTimeText : ""
+                        dateText: useAltClock ? root.alternateClockDateText : ""
+                        clockLabel: useAltClock ? root.alternateClockZoneText : ""
+                        clockClickable: root.alternateClockEnabled()
                         batteryPercent: root.batteryPercent
                         cpuPercent: root.cpuPercent
                         memoryPercent: root.memoryPercent
                         temperatureC: root.temperatureC
                         textPrimary: root.c("textPrimary", "#FFFFFF")
                         textSecondary: root.c("textSecondary", "#A1A1AA")
+                        onClockClicked: root.toggleClockDisplay()
                     }
 
                     ColumnLayout {

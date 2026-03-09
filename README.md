@@ -7,6 +7,7 @@
 ## Features
 
 - **Phone-style drag-down panel** for quick access to controls.
+- **Clickable header clock** that can flip between local time and an alternate timezone.
 - **Quick toggles** for Wi-Fi, Bluetooth, Airplane mode, and DND.
 - **Media controls** (play/pause, next/previous, metadata/art when available).
 - **Notification popups + history** so alerts are visible but manageable.
@@ -47,3 +48,19 @@ systemctl --user enable --now dropdeck.service
 | `loginctl` | Lock/logout actions |
 | `systemctl` | Suspend/reboot/poweroff |
 | `wlsunset` or `gammastep` | Night light toggle |
+
+## Clock configuration
+
+Each time you open the pull-down, the clock starts on your local time. Click it to switch to the alternate timezone clock.
+
+The default alternate clock is San Francisco:
+
+```json
+{
+  "clock": {
+    "alternateEnabled": true,
+    "alternateTimeZone": "America/Los_Angeles",
+    "alternateLabel": "San Francisco"
+  }
+}
+```
